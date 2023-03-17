@@ -61,37 +61,51 @@ function buildCharts(sample) {
     console.log(data);
 
     // Deliverable 1: 3. Create a variable that holds the samples array. 
-
+  var samplesArray = data.samples;
+  console.log('samples array', samplesArray);
     // Deliverable 1: 4. Create a variable that filters the samples for the object with the desired sample number.
-
+  var filteredSample = samplesArray.filter(sampleObj => sampleObj.id == sample);
+  console.log('filtered sample', filteredSample);
     // Deliverable 3: 1. Create a variable that filters the metadata array for the object with the desired sample number.
 
     // Deliverable 1: 5. Create a variable that holds the first sample in the array.
-
+    var result = filteredSample[0];
+    console.log(result);
     // Deliverable 3: 2. Create a variable that holds the first sample in the metadata array.
 
     // Deliverable 1: 6. Create variables that hold the otu_ids, otu_labels, and sample_values.
-
+    var otu_id = Object.values(result.otu_ids);
+    var otu_label = Object.values(result.otu_labels);
+    var samples_value = Object.values(result.sample_values);
+    console.log(otu_id)
+    console.log(otu_label)
+    console.log(samples_value)
     // Deliverable 3: 3. Create a variable that holds the washing frequency.
 
 
     // Deliverable 1: 7. Create the yticks for the bar chart.
     // Hint: Get the the top 10 otu_ids and map them in descending order 
     // so the otu_ids with the most bacteria are last. 
-    var yticks = 
+    var yticks = otu_id.slice(0,10).map(x => "OTU" + x).reverse()
+    console.log(yticks)
 
     // Deliverable 1: 8. Create the trace for the bar chart. 
-    var barData = [
-
-    ];
+    var barData = [{
+      x: (samples_value.slice(0,10).reverse()),
+      y: yticks,
+      type: 'bar',
+      orientation: 'h',
+      text: (otu_label === yticks)
+  }];
 
     // Deliverable 1: 9. Create the layout for the bar chart. 
     var barLayout = {
+      title: 'Top 10 Bacteria Cultures Found'
 
     };
 
     // Deliverable 1: 10. Use Plotly to plot the data with the layout. 
-
+    Plotly.newPlot('bar',barData,barLayout)
     // Deliverable 2: 1. Create the trace for the bubble chart.
 
     // Deliverable 2: 2. Create the layout for the bubble chart.
